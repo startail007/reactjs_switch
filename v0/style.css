@@ -1,0 +1,73 @@
+body{
+    margin: 0px;
+}
+
+.animateExample .example-enter,
+.animateExample .example-leave {
+    -webkit-transition: all .5s;
+    transition: all .5s;
+}
+.animateExample .example-enter {
+    margin-top: 20px;
+    opacity: 0;    
+}
+
+.animateExample .example-enter.example-enter-active {
+    margin-top: 0px;
+    opacity: 1;
+}
+
+.animateExample .example-leave {
+    opacity: 1;
+}
+
+.animateExample .example-leave.example-leave-active {
+    max-height:  0px;
+    opacity: 0;    
+}
+.Switch{
+    float: left;
+    position: relative;
+    display: block;
+    min-width: 100px;
+    min-height: 30px;
+    background-color: #e8e8e8;
+    --Switch-border-radius:10px;
+    --Switch-border-width:1px;
+    border-radius: var(--Switch-border-radius);
+    border-style: solid;
+    border-width: var(--Switch-border-width);
+    border-color: #c7c7c7;
+}
+.Switch > .Button{
+    --Button-border-radius:calc(var(--Switch-border-radius) - var(--Switch-border-width));
+    position: absolute;    
+    display:flex;
+    align-items:center;
+    justify-content:center;    
+    left: 0%;
+    --width:50%;
+    width: var(--width);
+    height: 100%;
+    background-color: #727272;
+    border-radius: var(--Button-border-radius) 0px 0px var(--Button-border-radius);
+    transition: left .5s,background-color .5s,border-radius .5s;
+}
+.Switch > .Button > text{
+    
+}
+
+.Switch > .Button.active{
+    left: calc(100% - var(--width));
+    background-color: #5ac0ff;
+    border-radius: 0px var(--Button-border-radius) var(--Button-border-radius) 0px; 
+}
+.Switch.disable{
+    background-color: #8e8e8e;
+}
+.Switch.disable > .Button{
+    background-color: #717171;
+}
+.Switch.disable > .Button.active{
+    background-color: #717171;
+}
