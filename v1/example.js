@@ -67,16 +67,20 @@ var Switch = React.createClass({
             this.LocX = e.clientX - Style(e.currentTarget).left;
             var Obj = e.currentTarget;
             this.maxX = Style(Obj.parentElement).width - Style(Obj).width;
+            this.SetLeft(e.clientX - this.LocX);
             this.setState({Mousedown:true})
             EventUtil.addHandler(window, 'mouseup', this.onMouseUp);
             EventUtil.addHandler(e.currentTarget.parentElement, 'mousemove', this.onMouseMove);
         }
     },
+    SetLeft:function(value){
+        var X = Math.min(Math.max(value,0),this.maxX);
+        this.setState({left:X,open:X/this.maxX>=0.5});  
+    },
     onMouseMove: function(e) {
         if(this.state.Mousedown){   
             this.move = true;
-            var X = Math.min(Math.max(e.clientX - this.LocX,0),this.maxX);
-            this.setState({left:X,open:X/this.maxX>=0.5});            
+            this.SetLeft(e.clientX - this.LocX);       
         }
     },
     onMouseUp: function(e) {
