@@ -61,8 +61,7 @@ var Switch = React.createClass({
     },
     onMouseDown: function(e) {
         if(this.state.enable){
-            var now=new Date();
-            this.time = now.getTime();
+            this.time = e.timeStamp;
             this.move = false;
             this.LocX = e.clientX - Style(e.currentTarget).left;
             var Obj = e.currentTarget;
@@ -84,8 +83,7 @@ var Switch = React.createClass({
         }
     },
     onMouseUp: function(e) {
-        var now=new Date();
-        var temp = now.getTime() - this.time
+        var temp = e.timeStamp - this.time
         if(temp < 250){
             this.setState({open:!this.state.open})
         }
