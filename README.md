@@ -1,7 +1,7 @@
-switch 開關功能
+開關功能(switch)
 =========================
 ### 演示
-[ http://virtools.github.io/reactjs_switch/v1/index.html ]
+[線上觀看](http://virtools.github.io/reactjs_switch/v1/index.html)
 ### 設置
 |設置|默認值|描述|
 |---|---|---|
