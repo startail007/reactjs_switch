@@ -63,9 +63,15 @@ switch 開關功能
         background-color: #717171;
     }
 
-### 設定參考
+### 例
 
-    
+    var Switch01 = ReactDOM.render(
+        <Switch open = {true} openText = {"開啟"} closeText = {"關閉"} onChange = {Switch01_OnChange}/>,
+        document.getElementById('example01')
+    );
+    function Switch01_OnChange(bool){
+        console.log(bool);
+    }
 
 ### 許可
 
