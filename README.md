@@ -64,7 +64,7 @@ switch 開關功能
     }
 
 ### 例
-
+```javascript
     var Switch01 = ReactDOM.render(
         <Switch open = {true} openText = {"開啟"} closeText = {"關閉"} onChange = {Switch01_OnChange}/>,
         document.getElementById('example01')
@@ -72,7 +72,7 @@ switch 開關功能
     function Switch01_OnChange(bool){
         console.log(bool);
     }
-
+```
 ### 許可
 
 MIT
