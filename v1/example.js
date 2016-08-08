@@ -48,30 +48,43 @@ var Style = function(pElement) {
   };
 };
 
+
 var Switch = React.createClass({
     getInitialState: function() {
-        return {open:(this.props.open==undefined)?false:this.props.open,enable:(this.props.enable==undefined)?true:this.props.enable,left:0,Mousedown:false};
+        return {open:(this.props.open==undefined)?false:this.props.open,enable:(this.props.enable==undefined)?true:this.props.enable,left:0,Mousedown:false,openText:this.props.openText || "",closeText:this.props.closeText || "",ChangeFun:this.props.onChange};
     },
     componentWillMount: function () {
         this.LocX = 0;
-        this.Obj = null;
         this.maxX = 0;
         this.move = false;
         this.time = 0;
+        //this.list = new EventTarget();
+    },
+    componentWillUnmount:function(){
+    },
+    componentDidUpdate: function(prevProps, prevState){
+        if(!this.state.Mousedown){
+            if(this.state.ChangeFun){
+                this.state.ChangeFun.call(this,this.state.open);
+            }
+        }
+    },
+    OnChange:function(pFun){
+        //Switch01.
+        this.setState({ChangeFun:pFun});
     },
     onMouseDown: function(e) {
         if(this.state.enable){
             this.time = e.timeStamp;
             this.move = false;
-            this.LocX = e.clientX - Style(e.currentTarget).left;
-            var Obj = e.currentTarget;
-            this.maxX = Style(Obj.parentElement).width - Style(Obj).width;
+            this.LocX = e.clientX - Style(this.refs.button).left;
+            this.maxX = Style(this.refs.switch).width - Style(this.refs.button).width;
             this.SetLeft(e.clientX - this.LocX);
             this.setState({Mousedown:true})
             EventUtil.addHandler(window, 'mouseup', this.onMouseUp);
-            EventUtil.addHandler(e.currentTarget.parentElement, 'mousemove', this.onMouseMove);
+            EventUtil.addHandler(this.refs.switch, 'mousemove', this.onMouseMove);
         }
-    },
+    },    
     SetLeft:function(value){
         var X = Math.min(Math.max(value,0),this.maxX);
         this.setState({left:X,open:X/this.maxX>=0.5});  
@@ -89,29 +102,30 @@ var Switch = React.createClass({
         }
         this.setState({Mousedown:false})
         EventUtil.removeHandler(window, 'mouseup', this.onMouseUp);
-        EventUtil.removeHandler(e.currentTarget, 'mousemove', this.onMouseMove);
+        EventUtil.removeHandler(this.refs.switch, 'mousemove', this.onMouseMove);
     },
     render: function() {
-        var text = (this.state.open ? "開啟" : "關閉");
+        var text = (this.state.open ? this.state.openText : this.state.closeText);
         var SwitchClass = "Switch " + (this.state.enable ? "" : "disable");
         var ButtonClass = "Button " + (this.state.open ? "active" : "");
-        var title = (this.state.enable ? (this.state.open ? "開啟" : "關閉") : "禁用");
-        var ButtonStyle = {};
+        var title = (this.state.enable ? (this.state.open ? this.state.openText : this.state.closeText) : "禁用");        
         if(this.state.Mousedown){
-            ButtonStyle.transition= 'all 0s';
-            ButtonStyle.left = this.state.left + 'px';
+            var ButtonStyle = {transition:'all 0s',left:this.state.left + 'px'};
         }
         return (
-                <div className = {SwitchClass} title = {title}>  
-                    <label className = {ButtonClass}  style = {ButtonStyle} onMouseDown = {this.onMouseDown}><div className = "text">{text}</div></label>
+                <div ref = "switch" className = {SwitchClass} title = {title}>  
+                    <label ref = "button" className = {ButtonClass}  style = {ButtonStyle} onMouseDown = {this.onMouseDown}><div className = "text">{text}</div></label>
                 </div> 
         );
     }
 });
-ReactDOM.render(
-    <Switch open = {true} />,
+var Switch01 = ReactDOM.render(
+    <Switch open = {true} openText = {"開啟"} closeText = {"關閉"} onChange = {Switch01_OnChange}/>,
     document.getElementById('example01')
 );
+function Switch01_OnChange(bool){
+    console.log(bool);
+}
 ReactDOM.render(
     <Switch open = {false} />,
     document.getElementById('example02')
