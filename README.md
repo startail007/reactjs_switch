@@ -15,7 +15,7 @@ switch 開關功能
 |onChange(bool)|切換開關觸發|
 ### 默認風格
 該組件會自動嵌入了一些必要的風格。
-
+```css
     .Switch{
         float: left;
         position: relative;
@@ -62,7 +62,7 @@ switch 開關功能
     .Switch.disable > .Button.active{
         background-color: #717171;
     }
-
+```
 ### 例
 ```javascript
     var Switch01 = ReactDOM.render(
